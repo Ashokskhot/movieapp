@@ -12,13 +12,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private MoviesAdapter adapter;
     private List<Movie> movieList;
     ProgressDialog pd;
-    private LinearLayout swipeContainer;
+    private SwipeRefreshLayout swipeContainer;
     private FavoriteDbHelper favoriteDbHelper;
     private AppCompatActivity activity = MainActivity.this;
     public static final String LOG_TAG = MoviesAdapter.class.getName();
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         initViews();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
       /*  //For testing the recipe collection sorting alphabetically
         TestAdapter testAdapter = new TestAdapter(LayoutInflater.from(this));
@@ -92,18 +89,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void initViews(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
         movieList = new ArrayList<>();
         adapter = new MoviesAdapter(this, movieList);
 
 
 
-//        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        } else {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -111,15 +107,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         favoriteDbHelper = new FavoriteDbHelper(activity);
 
 
-//        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-//            @Override
-//            public void onRefresh(){
-//                initViews();
-//                Toast.makeText(MainActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                initViews();
+                Toast.makeText(MainActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         checkSortOrder();
 
@@ -127,16 +123,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private void initViews2(){
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
         movieList = new ArrayList<>();
         adapter = new MoviesAdapter(this, movieList);
 
-//        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        } else {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -167,9 +162,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Collections.sort(movies, Movie.BY_NAME_ALPHABETICAL);
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     recyclerView.smoothScrollToPosition(0);
-//                    if (swipeContainer.isRefreshing()){
-//                        swipeContainer.setRefreshing(false);
-//                    }
+                    if (swipeContainer.isRefreshing()){
+                        swipeContainer.setRefreshing(false);
+                    }
 
                 }
 
@@ -205,9 +200,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     List<Movie> movies = response.body().getResults();
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     recyclerView.smoothScrollToPosition(0);
-//                    if (swipeContainer.isRefreshing()){
-//                        swipeContainer.setRefreshing(false);
-//                    }
+                    if (swipeContainer.isRefreshing()){
+                        swipeContainer.setRefreshing(false);
+                    }
                 }
 
                 @Override
