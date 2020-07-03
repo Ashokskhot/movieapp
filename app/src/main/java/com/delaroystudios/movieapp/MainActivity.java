@@ -1,6 +1,5 @@
 package com.delaroystudios.movieapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -9,21 +8,25 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.preference.PreferenceManager;
+
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.delaroystudios.movieapp.adapter.MoviesAdapter;
-import com.delaroystudios.movieapp.adapter.TestAdapter;
 import com.delaroystudios.movieapp.api.Client;
 import com.delaroystudios.movieapp.api.Service;
 import com.delaroystudios.movieapp.data.FavoriteDbHelper;
@@ -31,7 +34,6 @@ import com.delaroystudios.movieapp.model.Movie;
 import com.delaroystudios.movieapp.model.MoviesResponse;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,36 +47,41 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private MoviesAdapter adapter;
     private List<Movie> movieList;
     ProgressDialog pd;
-    private SwipeRefreshLayout swipeContainer;
+    private LinearLayout swipeContainer;
     private FavoriteDbHelper favoriteDbHelper;
     private AppCompatActivity activity = MainActivity.this;
     public static final String LOG_TAG = MoviesAdapter.class.getName();
+    public Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context=MainActivity.this;
 
         initViews();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
-        //For testing the recipe collection sorting alphabetically
+      /*  //For testing the recipe collection sorting alphabetically
         TestAdapter testAdapter = new TestAdapter(LayoutInflater.from(this));
         recyclerView.setAdapter(testAdapter);
-        testAdapter.setMovie(movieList);
+        testAdapter.setMovie(movieList);*/
 
+
+        Log.i("movie", String.valueOf(movieList));
 
 
 
     }
 
-    public Activity getActivity(){
+    public AppCompatActivity getActivity(){
         Context context = this;
         while (context instanceof ContextWrapper){
-            if (context instanceof Activity){
-                return (Activity) context;
+            if (context instanceof AppCompatActivity){
+                return (AppCompatActivity) context;
             }
             context = ((ContextWrapper) context).getBaseContext();
         }
@@ -85,17 +92,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void initViews(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
         movieList = new ArrayList<>();
         adapter = new MoviesAdapter(this, movieList);
 
 
 
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        }
+//        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        } else {
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+//        }
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -103,15 +111,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         favoriteDbHelper = new FavoriteDbHelper(activity);
 
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
-        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-            @Override
-            public void onRefresh(){
-                initViews();
-                Toast.makeText(MainActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.main_content);
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+//            @Override
+//            public void onRefresh(){
+//                initViews();
+//                Toast.makeText(MainActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         checkSortOrder();
 
@@ -119,15 +127,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private void initViews2(){
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
         movieList = new ArrayList<>();
         adapter = new MoviesAdapter(this, movieList);
 
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        }
+//        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        } else {
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+//        }
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -137,10 +146,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         getAllFavorite();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void loadJSON(){
 
         try{
-            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()){
+            if (context.getString(R.string.THE_MOVIE_DB_API_TOKEN).isEmpty()){
                 Toast.makeText(getApplicationContext(), "Please obtain API Key firstly from themoviedb.org", Toast.LENGTH_SHORT).show();
                 pd.dismiss();
                 return;
@@ -149,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Client Client = new Client();
             Service apiService =
                     Client.getClient().create(Service.class);
-            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+            Call<MoviesResponse> call = apiService.getPopularMovies(context.getString(R.string.THE_MOVIE_DB_API_TOKEN),5);
             call.enqueue(new Callback<MoviesResponse>() {
                 @Override
                 public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
@@ -157,9 +167,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     Collections.sort(movies, Movie.BY_NAME_ALPHABETICAL);
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()){
-                        swipeContainer.setRefreshing(false);
-                    }
+//                    if (swipeContainer.isRefreshing()){
+//                        swipeContainer.setRefreshing(false);
+//                    }
 
                 }
 
@@ -179,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void loadJSON1(){
 
         try{
-            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()){
+            if (context.getString(R.string.THE_MOVIE_DB_API_TOKEN).isEmpty()){
                 Toast.makeText(getApplicationContext(), "Please obtain API Key firstly from themoviedb.org", Toast.LENGTH_SHORT).show();
                 pd.dismiss();
                 return;
@@ -188,16 +198,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Client Client = new Client();
             Service apiService =
                     Client.getClient().create(Service.class);
-            Call<MoviesResponse> call = apiService.getTopRatedMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+            Call<MoviesResponse> call = apiService.getTopRatedMovies(context.getString(R.string.THE_MOVIE_DB_API_TOKEN));
             call.enqueue(new Callback<MoviesResponse>() {
                 @Override
                 public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                     List<Movie> movies = response.body().getResults();
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()){
-                        swipeContainer.setRefreshing(false);
-                    }
+//                    if (swipeContainer.isRefreshing()){
+//                        swipeContainer.setRefreshing(false);
+//                    }
                 }
 
                 @Override
