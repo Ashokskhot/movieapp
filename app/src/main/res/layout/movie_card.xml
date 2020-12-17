@@ -31,10 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/thumbnail"
                 android:paddingLeft="@dimen/movie_title_padding"
-                android:paddingRight="@dimen/movie_title_padding"
                 android:paddingTop="@dimen/movie_title_padding"
+                android:paddingRight="@dimen/movie_title_padding"
+                android:text="Movie Name"
                 android:textColor="@color/movie_title"
-                android:textSize="@dimen/movie_title"/>
+                android:textSize="@dimen/movie_title"
+                android:fontFamily="@font/source_sans_pro" />
 
             <TextView
                 android:id="@+id/userrating"
@@ -45,6 +47,7 @@
                 android:paddingRight="@dimen/movie_title_padding"
                 android:paddingBottom="@dimen/user_rating_padding_bottom"
                 android:textColor="@color/colorAccent"
+                android:fontFamily="@font/source_sans_pro"
                 android:textSize="@dimen/user_rating"/>
 
         </RelativeLayout>

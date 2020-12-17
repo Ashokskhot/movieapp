@@ -42,9 +42,9 @@ import retrofit2.Response;
 public class DetailActivity extends AppCompatActivity {
     TextView nameOfMovie, plotSynopsis, userRating, releaseDate;
     ImageView imageView;
-    private RecyclerView recyclerView;
+    // private RecyclerView recyclerView;
     private TrailerAdapter adapter;
-    private List<Trailer> trailerList;
+    // private List<Trailer> trailerList;
     private FavoriteDbHelper favoriteDbHelper;
     private Movie favorite;
     private final AppCompatActivity activity = DetailActivity.this;
@@ -173,16 +173,16 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initViews(){
-        trailerList = new ArrayList<>();
-        adapter = new TrailerAdapter(this, trailerList);
+        // trailerList = new ArrayList<>();
+        // adapter = new TrailerAdapter(this, trailerList);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        // recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
+        /*RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
 
-        loadJSON();
+        // loadJSON();
 
     }
 
@@ -200,8 +200,8 @@ public class DetailActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
                     List<Trailer> trailer = response.body().getResults();
-                    recyclerView.setAdapter(new TrailerAdapter(getApplicationContext(), trailer));
-                    recyclerView.smoothScrollToPosition(0);
+                    // recyclerView.setAdapter(new TrailerAdapter(getApplicationContext(), trailer));
+                    // recyclerView.smoothScrollToPosition(0);
                 }
 
                 @Override

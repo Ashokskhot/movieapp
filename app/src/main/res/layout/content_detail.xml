@@ -23,71 +23,141 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/title"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:padding="@dimen/padding_layout"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:textSize="20sp"
+                android:id="@+id/title_layout"
+                android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="16dp"
                 tools:layout_constraintTop_creator ="1"
-                tools:layout_constraintLeft_creator ="1"
-                />
+                tools:layout_constraintLeft_creator ="1">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:layout_marginTop="@dimen/layout_margin_top"
+                    android:textSize="20sp"
+                    android:layout_marginStart="16dp"
+                    android:textColor="#000"
+                    android:text="Movie: "
+                    app:fontFamily="@font/source_sans_pro"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:layout_marginTop="@dimen/layout_margin_top"
+                    android:textSize="20sp"
+                    android:layout_marginStart="16dp"
+                    android:textColor="#000"
+                    android:text="Avengers: The end game"
+                    app:fontFamily="@font/source_sans_pro" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/userrating"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                android:layout_marginStart="16dp"
+                android:orientation="horizontal"
+                android:id="@+id/userrating_layout"
                 app:layout_constraintLeft_toLeftOf="parent"
-                tools:layout_constraintTop_creator="1" />
+                tools:layout_constraintTop_creator="1"
+                app:layout_constraintTop_toBottomOf="@+id/title_layout">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="Rating: "
+                    app:fontFamily="@font/source_sans_pro"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userrating"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="8.5"
+                    app:fontFamily="@font/source_sans_pro"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/releasedate"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@+id/userrating"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:orientation="horizontal"
+                android:id="@+id/releasedate_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userrating_layout">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="Release Date: "
+                    app:fontFamily="@font/source_sans_pro"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/releasedate"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="2018-20-20"
+                    app:fontFamily="@font/source_sans_pro" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/plotsynopsis"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@+id/releasedate"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:id="@+id/plotsynopsis_layout"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/releasedate_layout"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    android:text="Description: "
+                    android:textColor="#000"
+                    app:fontFamily="@font/source_sans_pro"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/plotsynopsis"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    android:textColor="#000"
+                    android:text="Avengers is the movie which is watched by more than a billion people worldwide"
+                    app:fontFamily="@font/source_sans_pro" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/thumbnailUrl"
-                app:layout_constraintTop_toBottomOf="@+id/plotsynopsis"
+                app:layout_constraintTop_toBottomOf="@+id/plotsynopsis_layout"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:visibility="invisible"/>
 
-            <TextView
-                android:id="@+id/trailer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="@string/trailer"
-                app:layout_constraintTop_toBottomOf="@+id/plotsynopsis"
-                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <com.github.ivbaranov.mfb.MaterialFavoriteButton
                 android:id="@+id/favorite_button"
@@ -100,15 +170,12 @@
                 app:layout_constraintLeft_toRightOf="@+id/releasedate"
                 android:background="@color/colorPrimary"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view1"
-                android:layout_width="match_parent"
+            <RatingBar
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:scrollbars="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/trailer"
-                app:layout_constraintLeft_toLeftOf="parent" />
-
+                android:saveEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/plotsynopsis_layout"
+                android:numStars="5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
